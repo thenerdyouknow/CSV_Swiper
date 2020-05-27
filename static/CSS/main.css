@@ -1,0 +1,70 @@
+body{
+	min-height: 100vh;
+}
+
+.outer-container{
+	min-height: 100vh;
+}
+
+.heading{
+	padding-bottom: 1em;
+}
+
+.form-group{
+	margin-top: 1em;
+	margin-bottom: 0;
+}
+
+.attributes{
+	padding-top: 1em;
+}
+
+.demographic{
+	width: 100%;
+}
+.other-text{
+	display: none;
+}
+.demographic-labels{
+	font-weight: bold;
+}
+.demographic-options{
+	margin: 1.5em;
+}
+.submit-btn{
+	margin-bottom: 1em;
+}
+@media screen and (max-width: 768px) {
+		.demographic {
+		margin-left: 0;
+		margin-right: 0;
+		margin-bottom: 1em;
+		width: 100%;
+		}
+		.demographic-options{
+			margin-right: 1em;
+			margin-left: 1em;
+		}
+}
+.progress{
+	margin-bottom: 20px;
+}
+.red-star { color: red; }
+
+#affirmative{
+	width:100%;
+	background-color: #4CAF50;
+}
+
+#not-affirmative{
+	width:100%;
+	background-color: #f44336;
+}
+
+.non-affirmative-click{
+	background-color: #8b0000 !important;
+}
+
+.affirmative-click{
+	background-color: #013220 !important;
+}

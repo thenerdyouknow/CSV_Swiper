@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    {% module package_includes() %}
+</head>
+<body>
+
+<div class="outer-container d-flex flex-row justify-content-center align-items-center">
+    <div class="email-div form-group">
+
+        {% if error %}
+            <p><span style="color: red">{{ error }}</span></p>
+        {% end %}
+        
+        <form method="post" enctype="multipart/form-data" action="/upload" autocomplete="off">
+            
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-6">
+                        <label for="file-input">Choose file to upload:</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="file" id="file-input" name="input_file" />
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="row">
+                    <div class="col-6">
+                        <label for="show-columns">Choose columns you want to show:</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" id="show-columns" name="show_columns">
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="row">
+                    <div class="col-6">
+                        <label for="save-columns">Choose columns you want to save:</label>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" id="save-columns" name="save_columns">
+                        <small id="column-help" class="form-text text-muted">Leave it blank if you want to save all the columns.</small>
+                    </div>
+                </div>
+            </div>
+            
+            {% raw xsrf_form_html() %} 
+
+            <div class="submit-btn text-center">
+                <button type="submit" class="btn btn-primary ">Submit</button>
+             </div>
+        
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

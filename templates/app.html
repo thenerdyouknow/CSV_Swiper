@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    {% module package_includes() %}
+</head>
+<body>
+
+<div class="outer-container d-flex flex-row justify-content-center align-items-center">
+    <div class="email-div form-group h-100">
+
+        {% if error %}
+            <p><span style="color: red">{{ error }}</span></p>
+        {% end %}
+        
+        <form method="post" action="/app" autocomplete="off">
+            
+            <div class="form-group h-100">
+                <div class="row">
+                  <div class="col-2 text-center">
+                     <input type="submit" id="not-affirmative" class="button btn btn-primary" tabindex='0' name="negative" value="Negative">
+                </div>
+                    <div class="col description text-center" style='padding: 3px; width: 1000px; word-break: normal; word-wrap: normal;'>
+                        {% for key,value in column_data.items() %}
+                             <div class="row">
+                                <div class="col-2 float-right">
+                                    <b>{{ key }}:</b>
+                                </div>
+                                <div class="col-10">
+                                    <p>{{ value }}</p>
+                                </div>
+                              </div>
+                        {% end %}
+                    </div>
+                    <div class="col-2 text-center">
+                    <input type="submit" id="affirmative" class="button btn btn-primary" tabindex='0' name="positive" value="Positive"> 
+                </div>
+                </div>
+            </div>
+            {% raw xsrf_form_html() %} 
+        </form>
+    </div>
+</div>
+
+</body>
+
+
+<script type="text/javascript">
+$(function(){
+    $('html').keydown(function(e){
+        if(e.keyCode == 37) { // left
+              $("#not-affirmative").addClass("non-affirmative-click");   
+              $("#not-affirmative").trigger( "click" );
+        }
+        else if(e.keyCode == 39) { // right
+              $("#affirmative").addClass("affirmative-click");
+              $("#affirmative").trigger( "click" );
+        }
+    });
+});
+</script>
+
+</html>
