@@ -11,8 +11,8 @@ Go to 127.0.0.1:8000 to see the running application.
 ## How to use:
 
 1. Upload CSV by using the selector tool.
-2. Select the columns of the CSV you'd like to display for each row.
-3. Select the columns of the CSV you'd like to save for each row once you make a decision about class.
+2. Select the columns of the CSV you'd like to display for each row. Row names are comma seperated values.
+3. Select the columns of the CSV you'd like to save for each row once you make a decision about class. Row names are comma seperated values.
 4. Submit.
 5. Press the positive or negative button using the mouse or the left and right arrow keys.
 6. The files will be made in sorted/{file name}/affirmative and sorted/{file name}/negative for both the classes.
