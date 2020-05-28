@@ -13,6 +13,13 @@
             <p><span style="color: red">{{ error }}</span></p>
         {% end %}
         
+        <div class="progress" style="height: 20px;">
+            <div class="progress-bar progress-bar-striped progress-bar-info progress-bar-animated" role="progressbar" aria-valuenow="50"
+                aria-valuemin="0" aria-valuemax="100" style="width:{{ progress_width }}%; ">
+                    <span style="color:white">{{ progress_width }}% Complete</span>
+            </div>
+        </div>
+        
         <form method="post" action="/app" autocomplete="off">
             
             <div class="form-group h-100">

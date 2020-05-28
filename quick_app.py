@@ -84,6 +84,7 @@ class ApplicationHandler(tornado.web.RequestHandler):
 
         try:
             df = pd.read_csv(df_filepath)
+            self.set_secure_cookie("length",str(df.shape[0]))
             if(save_columns[0]==''):
                 df_columns = list(df.columns)
                 csv_writer_affirmative.writerow(df_columns)
@@ -118,11 +119,16 @@ class ApplicationHandler(tornado.web.RequestHandler):
             self.index = 0
 
         try:
+            length = round((self.index/float(self.get_secure_cookie("length").decode()))*100,2)
+        except:
+            length = 0
+
+        try:
             df = pd.read_csv(df_filepath)
             list_of_items = {}
             for each_column in show_columns:
                 list_of_items[each_column.strip()] = df.iloc[self.index][each_column.strip()]
-            self.render('app.html',column_data=list_of_items,error='')
+            self.render('app.html',column_data=list_of_items,error='',progress_width=length)
 
         except:
             err_type, error, traceback = sys.exc_info()
