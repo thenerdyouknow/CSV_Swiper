@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    {% module package_includes() %}
+</head>
+<body>
+
+<div class="outer-container d-flex flex-row justify-content-center align-items-center">
+    <div class="email-div form-group">
+
+        <!-- Display any errors, if needed -->
+        {% if error %}
+            <span style="color: red">Error: {{ error }}</span>
+        {% end %}
+
+        <button class="add btn btn-primary">Add Question</button>
+
+        <form method="post">
+            <!-- DIV for the question -->
+            <div id="every-section-div">
+            </div>
+
+            <!-- DIV for the choices -->
+            
+
+            <!-- DIV for adding choices -->
+            
+
+            <!-- INCLUDE for xsrf security -->
+            {% module xsrf_form_html() %}
+
+            <!-- DIV for submitting the form -->
+            <div id="submit-form" class="row">          
+                <button type="submit" class="text-center create_poll">Create Poll</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    $(document).ready(function(){
+        var wrapper = $("#every-section-div");
+        var counter = 0;
+
+        //Adds a choice DIV if the add button is clicked.
+        $(".add").click(function(){
+            $(wrapper).append('<div id="question-div-'+counter+' every-div"><div id="question" class="row"><div class="col-3"><label for="question">Question</label></div><div class="col-9"><input type="text" name="question"></div></div><div id="choices"><div class="row"><div class="col-3"><label for="choice">Choice for the poll</label></div><div class="col-6"><input type="text" name="choice" required></div><div class="col-3"><button type="button" class="remove">Remove</button></div></div></div><div id="add-another" class="row"><button type="button" class="add">Add another choice</button></div></div>');
+            counter += 1;
+        });
+
+        //Can't use a simple .click function because it seems to be unreachable under the DIVs.
+        $(wrapper).on("click",".remove", function(){
+            var number_of_choices = $('#choices .row').length;
+            //The parent of the div, is the row, the parent of which is the #choices div, the one the option needs to be removed from.
+            if(number_of_choices == 1){
+                alert("Can't remove every option!")
+            } else {
+                $(this).parent().parent().remove();
+            }
+            
+        });
+
+    });
+</script>

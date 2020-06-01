@@ -61,10 +61,25 @@ body{
 	background-color: #f44336;
 }
 
+#neutral{
+	width:100%;
+}
+
 .non-affirmative-click{
 	background-color: #8b0000 !important;
 }
 
 .affirmative-click{
 	background-color: #013220 !important;
+}
+
+.neutral-click{
+	background-color: #2644A5 !important;
+}
+/** {
+  border: 1px solid #f00 !important;
+}*/
+
+.row{
+	width: 100%;
 }

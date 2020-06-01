@@ -12,7 +12,8 @@ class Application(tornado.web.Application):
         handlers = [
             (r"/", IndexHandler),
             (r"/upload", UploadHandler),
-            (r"/app",ApplicationHandler)
+            (r"/app",ApplicationHandler),
+            (r"/questions",QuestionHandler)
         ]
         cookie_secret = "AjOIgQb2JyOv5c6TIwUYKuu4HFerEedgAfTZ1yCc0/kL2ryBf9xCtoKGnwQ1uN3uuVc="
         template_path = os.path.join(os.path.dirname( __file__) ,"templates")
@@ -56,12 +57,19 @@ class UploadHandler(tornado.web.RequestHandler):
         self.redirect('/app')
         return
 
+class QuestionHandler(tornado.web.RequestHandler):
+
+    def get(self):
+        self.render("question_form.html",error="")
+        return
+
 class ApplicationHandler(tornado.web.RequestHandler):
 
     def initialize(self):
         FOLDER_NAME = 'sorted'
-        AFFIRMATIVE = 'affirmative.csv'
-        NEGATIVE = 'negative.csv'
+        AFFIRMATIVE = 'politician_individual.csv'
+        NEGATIVE = 'not_politician.csv'
+        NEUTRAL = 'politican_party.csv'
         df_filepath = self.get_secure_cookie("filepath").decode()
         save_columns = ast.literal_eval(self.get_secure_cookie("save_columns").decode())
         base_filepath = os.path.join(FOLDER_NAME,df_filepath.split(".")[0].split("/")[-1])
@@ -78,9 +86,12 @@ class ApplicationHandler(tornado.web.RequestHandler):
 
         open_file_affirmative = open(os.path.join(base_filepath,AFFIRMATIVE),'w')
         open_file_negative = open(os.path.join(base_filepath,NEGATIVE),'w')
+        open_file_neutral = open(os.path.join(base_filepath,NEUTRAL),'w')
 
         csv_writer_affirmative = csv.writer(open_file_affirmative,delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         csv_writer_negative = csv.writer(open_file_negative,delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)      
+        csv_writer_neutral = csv.writer(open_file_neutral,delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)      
+
 
         try:
             df = pd.read_csv(df_filepath)
@@ -89,9 +100,11 @@ class ApplicationHandler(tornado.web.RequestHandler):
                 df_columns = list(df.columns)
                 csv_writer_affirmative.writerow(df_columns)
                 csv_writer_negative.writerow(df_columns)
+                csv_writer_neutral.writerow(df_columns)
             else:
                 csv_writer_affirmative.writerow(save_columns)
                 csv_writer_negative.writerow(save_columns)
+                csv_writer_neutral.writerow(save_columns)
         except:
             err_type, error, traceback = sys.exc_info()
             self.render('error.html',error=error)
@@ -101,6 +114,7 @@ class ApplicationHandler(tornado.web.RequestHandler):
 
         self.set_secure_cookie("affirmative",str(os.path.join(base_filepath,AFFIRMATIVE)))
         self.set_secure_cookie("negative",str(os.path.join(base_filepath,NEGATIVE)))
+        self.set_secure_cookie("neutral",str(os.path.join(base_filepath,NEUTRAL)))
         return
 
 
@@ -161,6 +175,11 @@ class ApplicationHandler(tornado.web.RequestHandler):
 
         elif self.get_argument('negative', None) is not None:
             with open(self.get_secure_cookie('negative').decode(),'a') as open_file:
+                csv_writer = csv.writer(open_file)
+                csv_writer.writerow(list(list_of_items.values()))
+
+        elif self.get_argument('neutral', None) is not None:
+            with open(self.get_secure_cookie('neutral').decode(),'a') as open_file:
                 csv_writer = csv.writer(open_file)
                 csv_writer.writerow(list(list_of_items.values()))
 
