@@ -60,6 +60,7 @@
 
 </body>
 
+<script src="https://unpkg.com/anycontrol/dist/index.umd.min.js"></script>
 
 <script type="text/javascript">
 $(function(){
@@ -78,6 +79,25 @@ $(function(){
         }
     });
 });
+
+var ctrl = new anycontrol()
+
+ctrl.addCommand("left", function() {
+    $("#not-affirmative").addClass("non-affirmative-click");   
+    $("#not-affirmative").trigger( "click" );
+});
+
+ctrl.addCommand("right", function () {
+    $("#affirmative").addClass("affirmative-click");
+    $("#affirmative").trigger( "click" );
+});
+
+ctrl.addCommand("down", function () {
+    $("#neutral").addClass("neutral-click");
+    $("#neutral").trigger( "click" );
+});
+ctrl.start();
+
 </script>
 
 </html>
